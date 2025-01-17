@@ -1,0 +1,82 @@
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Excluir ambientes virtuais
+venv/
+env/
+
+# Excluir arquivos compilados do Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Excluir configurações específicas do editor
+.vscode/
+.idea/
+
+# Excluir logs, dados temporários e arquivos gerados pelo sistema
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# Excluir arquivos de pacotes criados
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Excluir arquivos de dependências baixadas
+pip-wheel-metadata/
+*.egg-info/
+
+# Excluir arquivos do Jupyter Notebook (checkpoints)
+.ipynb_checkpoints/
+
+# Excluir arquivos de backup do sistema
+*.~*
+
+# Excluir chaves e arquivos de configuração sensíveis (se existir)
+*.env
+.env.*
+
