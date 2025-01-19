@@ -1,23 +1,9 @@
 import streamlit as st
-from langchain.memory import ConversationBufferMemory
-from langchain_google_genai import ChatGoogleGenerativeAI
-from pathlib import Path
+from utils import make_chain_conversation, PDF_FOLDER
+from dotenv import load_dotenv, find_dotenv
 from time import sleep
 
-
-PDF_FOLDER = Path(__file__).parent / 'PDF'
-MEMORY = ConversationBufferMemory(return_messages=True)
-
-
-def creat_chain_conversation():
-    st.session_state['chain'] = True
-
-    memory = MEMORY
-    memory.chat_memory.add_ai_message('Oi')
-    memory.chat_memory.add_ai_message('Eu sou uma LLM')
-
-    st.session_state['memory'] = MEMORY
-    sleep(2)
+_ = load_dotenv(find_dotenv())
 
 
 def sidebar():
@@ -40,7 +26,7 @@ def sidebar():
             st.error('Por favor faça o upload de arquivos para inicializar')
         else:
             st.success('inicializando Chat Bot...')
-            creat_chain_conversation()
+            make_chain_conversation()
             st.rerun()
 
 
@@ -51,11 +37,10 @@ def chat_window():
         st.error('Inicialize o ChatBot para começar')
         st.stop()
 
-    # chain = st.session_state['chain']
-    # memory = chain.memory
+    chain = st.session_state['chain']
+    memory = chain.memory
 
-    memory = st.session_state['memory']
-    messages = memory.load_memory_variables({})['history']
+    messages = memory.load_memory_variables({})['chat_history']
 
     container = st.container()
     for message in messages:
@@ -63,18 +48,15 @@ def chat_window():
         chat.markdown(message.content)
 
     user_input = st.chat_input('digite uma mensagem...')
-    
+     
     if user_input:
         chat = container.chat_message('human')
         chat.markdown(user_input)
         chat = container.chat_message('ai')
-        chat.markdown('Gerando uma resposta...')
+        chain.invoke({'question': user_input})
         sleep(2)
-        memory.chat_memory.add_user_message(user_input)
-        memory.chat_memory.add_ai_message('oi é a LLM de novo')
 
         st.rerun()
-
 
 
 def main():
